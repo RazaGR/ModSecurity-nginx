@@ -11,7 +11,7 @@
 ngx_feature_name=
 ngx_feature_run=no
 ngx_feature_incs="#include <modsecurity/modsecurity.h>"
-ngx_feature_libs="-lmodsecurity -lliblmdb -llibmaxminddb"
+ngx_feature_libs="-lmodsecurity"
 ngx_feature_test='printf("hello");'
 ngx_modsecurity_opt_I=
 ngx_modsecurity_opt_L=
@@ -119,7 +119,7 @@ if test -n "$ngx_module_link"; then
 	ngx_module_deps="$ngx_addon_dir/src/ddebug.h \
             $ngx_addon_dir/src/ngx_http_modsecurity_common.h \
             "
-        ngx_module_libs="$ngx_feature_libs"
+        ngx_module_libs="$ngx_feature_libs -lliblmdb -llibmaxminddb"
         ngx_module_incs="$ngx_feature_path"
 
         ngx_module_order="ngx_http_chunked_filter_module \
@@ -135,7 +135,7 @@ else
 	NGX_LD_OPT="$ngx_modsecurity_opt_L $NGX_LD_OPT"
 
 	CORE_INCS="$CORE_INCS $ngx_feature_path"
-	CORE_LIBS="$CORE_LIBS $ngx_feature_libs"
+	CORE_LIBS="$CORE_LIBS $ngx_feature_libs -lliblmdb -llibmaxminddb"
 
 	HTTP_FILTER_MODULES="$HTTP_FILTER_MODULES ngx_http_modsecurity_module"
 	NGX_ADDON_SRCS="\
