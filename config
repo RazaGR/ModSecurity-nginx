@@ -32,11 +32,11 @@ if [ -n "$MODSECURITY_INC" -o -n "$MODSECURITY_LIB" ]; then
     ngx_modsecurity_opt_L="-L$MODSECURITY_LIB $YAJL_EXTRA"
 
     if [ $NGX_RPATH = YES ]; then
-        ngx_feature_libs="-R$MODSECURITY_LIB -L$MODSECURITY_LIB -lmodsecurity $YAJL_EXTRA"
+        ngx_feature_libs="-R$MODSECURITY_LIB -L$MODSECURITY_LIB -lmodsecurity -llmdb -lmaxminddb $YAJL_EXTRA"
     elif [ "$NGX_IGNORE_RPATH" != "YES" -a $NGX_SYSTEM = "Linux" ]; then
-        ngx_feature_libs="-Wl,-rpath,$MODSECURITY_LIB -L$MODSECURITY_LIB -lmodsecurity $YAJL_EXTRA"
+        ngx_feature_libs="-Wl,-rpath,$MODSECURITY_LIB -L$MODSECURITY_LIB -lmodsecurity -llmdb -lmaxminddb $YAJL_EXTRA"
     else
-        ngx_feature_libs="-L$MODSECURITY_LIB -lmodsecurity $YAJL_EXTRA"
+        ngx_feature_libs="-L$MODSECURITY_LIB -lmodsecurity -llmdb -lmaxminddb $YAJL_EXTRA"
     fi
 
     . auto/feature
@@ -50,7 +50,7 @@ END
 else
     # auto-discovery
     ngx_feature="ModSecurity library"
-    ngx_feature_libs="-lmodsecurity"
+    ngx_feature_libs="-lmodsecurity -llmdb -lmaxminddb"
 
     . auto/feature
 
@@ -58,11 +58,11 @@ else
         ngx_feature="ModSecurity library in /usr/local/modsecurity"
         ngx_feature_path="/usr/local/modsecurity/include"
         if [ $NGX_RPATH = YES ]; then
-            ngx_feature_libs="-R/usr/local/modsecurity/lib -L/usr/local/modsecurity/lib -lmodsecurity"
+            ngx_feature_libs="-R/usr/local/modsecurity/lib -L/usr/local/modsecurity/lib -lmodsecurity -llmdb -lmaxminddb"
         elif [ "$NGX_IGNORE_RPATH" != "YES" -a $NGX_SYSTEM = "Linux" ]; then
-            ngx_feature_libs="-Wl,-rpath,/usr/local/modsecurity/lib -L/usr/local/modsecurity/lib -lmodsecurity"
+            ngx_feature_libs="-Wl,-rpath,/usr/local/modsecurity/lib -L/usr/local/modsecurity/lib -lmodsecurity -llmdb -lmaxminddb"
         else
-            ngx_feature_libs="-L/usr/local/modsecurity/lib -lmodsecurity"
+            ngx_feature_libs="-L/usr/local/modsecurity/lib -lmodsecurity -llmdb -lmaxminddb"
         fi
 
         . auto/feature
